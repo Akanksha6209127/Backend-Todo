@@ -24,15 +24,15 @@
 // src/services/todo.service.ts
 import { Todo } from "../models/todo.model";
 
-export const getTodosService = async (userId: string) => {
-  return await Todo.find({ userId }); // sirf us user ke todos return karega
+export const getTodosService = async (user: string) => {
+  return await Todo.find({ user }); // sirf us user ke todos return karega
 };
 
 export const createTodoService = async (data: {
   title: string;
   amount: number;
   unit: string;
-  userId: string;
+  user: string;
 }) => {
   return await Todo.create(data);
 };

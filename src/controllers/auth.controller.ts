@@ -67,7 +67,7 @@ import { loginUserService } from "../services/auth.service";
 import { generateToken } from "../utils/generateToken";
 import { AuthRequest } from "../middlewares/auth.middleware";
 
-// =================== Signup ===================
+
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
@@ -77,7 +77,7 @@ export const registerUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    // Sirf normal user role allow karna
+    
     const userRole = "user";
     const user = await User.create({ name, email, password, role: userRole });
 
@@ -93,15 +93,17 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-// =================== Login ===================
+
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
     const userData = await loginUserService(email, password);
+    const token = generateToken(userData._id as string);
 
     res.json({
       ...userData,
+      token,
       message: "User logged in successfully",
     });
   } catch (error) {
@@ -111,8 +113,9 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-// =================== Get Logged-in User (/me) ===================
+
 export const getMe = async (req: AuthRequest, res: Response) => {
+  
   try {
     // protect middleware se req.user aayega
     if (!req.user) {
