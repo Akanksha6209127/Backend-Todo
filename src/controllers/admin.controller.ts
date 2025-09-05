@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../models/user.model";
+import  User  from "../models/user.model";
 
 
 export const createAdminFromEnv = async (req: Request, res: Response) => {
@@ -17,7 +17,7 @@ export const createAdminFromEnv = async (req: Request, res: Response) => {
     const existingUser = await User.findOne({ email: adminEmail });
 
     if (existingUser) {
-      // If user exists, ensure role is admin; update name and password from env if provided
+     
       let shouldSave = false;
       if (existingUser.role !== "admin") {
         existingUser.role = "admin";
@@ -27,8 +27,7 @@ export const createAdminFromEnv = async (req: Request, res: Response) => {
         existingUser.name = adminName;
         shouldSave = true;
       }
-      // Update password only if different; setting triggers hash via pre-save
-      // Note: We cannot compare hashed vs plain, so we overwrite to ensure sync with env
+      
       existingUser.password = adminPassword;
       shouldSave = true;
 

@@ -1,47 +1,13 @@
-// import { Todo } from "../models/todo.model";
+import  Todo from "../models/todo.model";
 
-// export const getTodosService = async () => {
-//   return await Todo.find();
-// };
+export const listTodos = (userId: string, groupId: string) =>
+  Todo.find({ user: userId, groupId }).sort({ createdAt: -1 });
 
-// export const createTodoService = async (data: {
-//   title: string;
-//   amount: number;
-//   unit: string;
-// }) => {
-//   return await Todo.create(data);
-// };
+export const createTodo = (userId: string, title: string, amount: number | undefined, unit: string | undefined, groupId: string) =>
+  Todo.create({ user: userId, title, amount, unit, groupId });
 
-// export const updateTodoService = async (id: string, data: any) => {
-//   return await Todo.findByIdAndUpdate(id, data, { new: true });
-// };
+export const updateTodo = (userId: string, id: string, data: Partial<{ title: string; amount: number; unit: string; completed: boolean }>) =>
+  Todo.findOneAndUpdate({ _id: id, user: userId }, data, { new: true });
 
-// export const deleteTodoService = async (id: string) => {
-//   return await Todo.findByIdAndDelete(id);
-// };
-
-
-// src/services/todo.service.ts
-import { Todo } from "../models/todo.model";
-
-export const getTodosService = async (user: string) => {
-  return await Todo.find({ user }); // sirf us user ke todos return karega
-};
-
-export const createTodoService = async (data: {
-  title: string;
-  amount: number;
-  unit: string;
-  user: string;
-}) => {
-  return await Todo.create(data);
-};
-
-export const updateTodoService = async (id: string, data: any) => {
-  return await Todo.findByIdAndUpdate(id, data, { new: true });
-};
-
-export const deleteTodoService = async (id: string) => {
-  return await Todo.findByIdAndDelete(id);
-};
-
+export const deleteTodo = (userId: string, id: string) =>
+  Todo.findOneAndDelete({ _id: id, user: userId });

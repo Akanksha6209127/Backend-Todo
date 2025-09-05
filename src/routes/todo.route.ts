@@ -1,37 +1,16 @@
-// import { Router } from "express";
-// import {
-//   getTodos,
-//   createTodo,
-//   updateTodo,
-//   deleteTodo,
-// } from "../controllers/todo.controller";
-
-// const router = Router();
-
-// router.get("/", getTodos);          
-// router.post("/", createTodo);       
-// router.put("/:id", updateTodo);     
-// router.delete("/:id", deleteTodo);  
-
-// export default router;
-
-
 import { Router } from "express";
-import {
-  getTodos,
-  createTodo,
-  updateTodo,
-  deleteTodo,
-} from "../controllers/todo.controller";
-import { protect } from "../middlewares/auth.middleware";  // import protect
+import { protect } from "../middlewares/auth.middleware";
+import { createTodo, deleteTodo, getTodos, updateTodo } from "../controllers/todo.controller";
+import { validate } from "../middlewares/validate.middleware";
+import { createTodoSchema, updateTodoSchema } from "../validators/todo.validators";
 
 const router = Router();
 
-// Protect all routes
-router.get("/", protect, getTodos);
-router.post("/", protect, createTodo);
-router.put("/:id", protect, updateTodo);
-router.delete("/:id", protect, deleteTodo);
+router.use(protect);
+
+router.get("/", getTodos); // ?listId= OR ?groupId=
+router.post("/", validate(createTodoSchema), createTodo);
+router.put("/:id", validate(updateTodoSchema), updateTodo);
+router.delete("/:id", deleteTodo);
 
 export default router;
-

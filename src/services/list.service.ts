@@ -1,27 +1,13 @@
+import  List  from "../models/list.model";
 
+export const listLists = (userId: string, groupId: string) =>
+  List.find({ user: userId, groupId }).sort({ createdAt: -1 });
 
-import { List, IList } from "../models/list.model";
+export const createList = (userId: string, name: string, groupId: string) =>
+  List.create({ user: userId, name, groupId });
 
+export const updateList = (userId: string, id: string, name?: string) =>
+  List.findOneAndUpdate({ _id: id, user: userId }, { name }, { new: true });
 
-export const getListsService = async (user: string): Promise<IList[]> => {
-  return await List.find({ user }).sort({ createdAt: -1 });
-};
-
-
-export const createListService = async (data: { name: string; user: string }): Promise<IList> => {
-  return await List.create(data);
-};
-
-
-export const updateListService = async ( 
-  id: string,
-  data: Partial<IList>,
-  user: string
-): Promise<IList | null> => {
-  return await List.findOneAndUpdate({ _id: id, user }, data, { new: true });
-};
-
-
-export const deleteListService = async (id: string, user: string): Promise<IList | null> => {
-  return await List.findOneAndDelete({ _id: id, user });
-};
+export const deleteList = (userId: string, id: string) =>
+  List.findOneAndDelete({ _id: id, user: userId });
