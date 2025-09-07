@@ -18,12 +18,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
+app.get("/", (_req, res) => {
+  res.send("🚀 API is running successfully on Render!");
+});
+
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 app.use("/api/auth", routes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/lists", listRoutes);
 app.use("/api/todos", todoRoutes);
+
 
 app.use(notFound);
 app.use(errorHandler);
