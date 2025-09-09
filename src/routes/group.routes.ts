@@ -19,8 +19,8 @@ router.use(protect);
 
 router.get("/", getGroups);
 router.post("/", validate(createGroupSchema), createGroup);
-router.patch("/:id", validate(paramIdSchema, "params"), updateGroup);
-router.delete("/:id", validate(paramIdSchema, "params"), deleteGroup);
-router.get("/:id", validate(paramIdSchema, "params"), getGroupById);
+router.patch("/:id", validate(paramIdSchema), updateGroup);
+router.delete("/:id", validate(paramIdSchema), deleteGroup);
+router.get("/:id", validate(paramIdSchema), getGroupById);
 
 export default router;

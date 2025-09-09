@@ -18,7 +18,7 @@ router.use(protect);
 
 router.get("/", getTodos); // ?listId= OR ?groupId=
 router.post("/", validate(createTodoSchema), createTodo);
-router.put("/:id", validate(updateTodoSchema, "params"), updateTodo);
+router.put("/:id", validate(updateTodoSchema), updateTodo);
 router.delete("/:id", deleteTodo);
 
 export default router;

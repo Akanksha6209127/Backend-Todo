@@ -18,7 +18,7 @@ router.use(protect);
 
 router.get("/", getLists); // optional ?groupId=
 router.post("/", validate(createListSchema), createList);
-router.put("/:id", validate(updateListSchema, "params"), renameList);
+router.put("/:id", validate(updateListSchema), renameList);
 router.delete("/:id", deleteList);
 
 export default router;
